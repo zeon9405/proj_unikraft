@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <rect width="300" height="300" fill="#f5f2ee"/>
+  <!-- 카메라 아이콘 -->
+  <rect x="95" y="110" width="110" height="82" rx="8" fill="none" stroke="#c9bdb5" stroke-width="3"/>
+  <circle cx="150" cy="151" r="22" fill="none" stroke="#c9bdb5" stroke-width="3"/>
+  <circle cx="150" cy="151" r="10" fill="#d9d2cb"/>
+  <path d="M130 110 L136 98 L164 98 L170 110" fill="none" stroke="#c9bdb5" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="188" cy="122" r="5" fill="#c9bdb5"/>
+  <!-- 텍스트 -->
+  <text x="150" y="222" text-anchor="middle" fill="#b8a99a" font-size="15" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" font-weight="500">상품 준비중</text>
+  <text x="150" y="244" text-anchor="middle" fill="#ccc0b8" font-size="12" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">이미지가 곧 등록됩니다</text>
+</svg>

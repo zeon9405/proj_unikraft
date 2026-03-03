@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <rect width="300" height="300" fill="#f5f2ee"/>
+  <!-- 사람 실루엣 -->
+  <circle cx="150" cy="115" r="38" fill="#d9d2cb"/>
+  <path d="M68 242 Q68 185 150 185 Q232 185 232 242" fill="#d9d2cb"/>
+  <!-- 텍스트 -->
+  <text x="150" y="272" text-anchor="middle" fill="#b8a99a" font-size="14" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" font-weight="500">사진 준비중</text>
+</svg>
