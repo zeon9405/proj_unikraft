@@ -4,6 +4,7 @@ import com.unikraft.global.security.oauth2.CustomOAuth2UserService;
 import com.unikraft.global.security.oauth2.OAuth2SuccessHandler;
 import com.unikraft.global.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,6 +30,9 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
+    @Value("${app.frontend-url:http://localhost:3000}")
+    private String frontendUrl;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -51,7 +55,7 @@ public class SecurityConfig {
                             exception.getMessage() != null ? exception.getMessage() : "소셜 로그인 실패",
                             StandardCharsets.UTF_8
                     );
-                    response.sendRedirect("http://localhost:3000/oauth2/callback?error=" + msg);
+                    response.sendRedirect(frontendUrl + "/oauth2/callback?error=" + msg);
                 })
             )
             // JWT 필터를 Spring Security 인증 필터 앞에 배치
@@ -68,7 +72,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedOrigins(List.of(frontendUrl));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
