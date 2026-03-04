@@ -1,38 +1,31 @@
 #!/bin/bash
 
 # ===========================
-# MAISON ARTISAN 배포 스크립트
+# MAISON ARTISAN 배포 스크립트 (로컬 실행)
 # ===========================
 # 사용법: ./deploy.sh
-# 전제조건: env.properties가 ~/app/ 에 존재해야 함
+# 전제조건: SSH 키가 아래 경로에 존재해야 함
 
 set -e
 
+KEY="C:/unikraft-key.pem"
+SERVER="ubuntu@43.203.121.221"
 APP_DIR="/home/ubuntu/app"
-JAR_NAME="unikraft-0.0.1-SNAPSHOT.jar"
-SPRING_PROFILE="prod"
 
-echo "==== [1/5] 최신 코드 받기 ===="
-cd $APP_DIR
+echo "==== [1/4] 최신 코드 git pull ===="
 git pull origin master
 
-echo "==== [2/5] React 빌드 ===="
-cd $APP_DIR/src/frontend
+echo "==== [2/4] React 로컬 빌드 ===="
+cd src/frontend
 npm install --silent
 npm run build
+cd ../..
 
-echo "==== [3/5] React 빌드 결과를 Nginx 서빙 위치로 복사 ===="
-sudo cp -r $APP_DIR/src/frontend/build/* /var/www/unikraft/
+echo "==== [3/4] 빌드 결과물 서버로 전송 ===="
+scp -i "$KEY" -r src/frontend/build/* $SERVER:/var/www/unikraft/
 
-echo "==== [4/5] Spring Boot 빌드 ===="
-cd $APP_DIR
-chmod +x ./gradlew
-./gradlew clean bootJar -x test
-
-echo "==== [5/5] 앱 재시작 ===="
-sudo systemctl restart unikraft
+echo "==== [4/4] 서버 Spring Boot 빌드 & 재시작 ===="
+ssh -i "$KEY" $SERVER "bash $APP_DIR/deploy-server.sh"
 
 echo ""
 echo "==== 배포 완료! ===="
-echo "상태 확인: sudo systemctl status unikraft"
-echo "로그 확인: sudo journalctl -u unikraft -f"
