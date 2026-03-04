@@ -46,7 +46,9 @@ function NavBar({ user, setUser, categories, categoriesLoading, cartCount }) {
 
     return (
         <nav>
-            <Link to="/" className="nav-logo" style={{ textDecoration: 'none' }}>MAISON <span>ARTISAN</span></Link>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+                <img src="/logo.svg" alt="MAISON ARTISAN" style={{ height: '60px' }} />
+            </Link>
             <ul className="nav-links">
                 <li className="nav-item"><Link to="/newProduct">신규입고</Link></li>
                 <li className="nav-item">

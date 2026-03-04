@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Background -->
+  <rect width="64" height="64" fill="#211818"/>
+  <!-- Outer diamond -->
+  <polygon
+          points="32,4 58,32 32,60 6,32"
+          fill="none"
+          stroke="#b88e8d"
+          stroke-width="2.4"
+  />
+  <!-- Inner diamond -->
+  <polygon
+          points="32,16 50,32 32,48 14,32"
+          fill="none"
+          stroke="#b88e8d"
+          stroke-width="1.2"
+  />
+  <!-- Corner dots -->
+  <circle cx="32" cy="4"  r="1.6" fill="#b88e8d"/>
+  <circle cx="32" cy="60" r="1.6" fill="#b88e8d"/>
+  <circle cx="6"  cy="32" r="1.6" fill="#b88e8d"/>
+  <circle cx="58" cy="32" r="1.6" fill="#b88e8d"/>
+  <!-- Corner tick marks -->
+  <line x1="6" y1="27" x2="6" y2="37" stroke="#b88e8d" stroke-width="1.6"/>
+  <line x1="58" y1="27" x2="58" y2="37" stroke="#b88e8d" stroke-width="1.6"/>
+  <!-- Needle body -->
+  <line x1="32" y1="20" x2="32" y2="50" stroke="#b88e8d" stroke-width="2.8"/>
+  <!-- Needle eye -->
+  <ellipse cx="32" cy="24" rx="3" ry="2.2" fill="none" stroke="#b88e8d" stroke-width="2"/>
+  <!-- Thread arcs left -->
+  <path d="M 22,32 Q 27,25 32,28" fill="none" stroke="#b88e8d" stroke-width="1.8"/>
+  <path d="M 22,32 Q 27,39 32,36" fill="none" stroke="#b88e8d" stroke-width="1.8"/>
+  <!-- Thread arcs right -->
+  <path d="M 42,32 Q 37,25 32,28" fill="none" stroke="#b88e8d" stroke-width="1.8"/>
+  <path d="M 42,32 Q 37,39 32,36" fill="none" stroke="#b88e8d" stroke-width="1.8"/>
+</svg>
