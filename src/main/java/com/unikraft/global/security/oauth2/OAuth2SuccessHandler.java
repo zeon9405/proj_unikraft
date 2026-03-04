@@ -4,6 +4,7 @@ import com.unikraft.global.security.jwt.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -25,7 +26,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final JwtTokenProvider jwtTokenProvider;
     private final TempCodeStore tempCodeStore;
 
-    private static final String FRONTEND_CALLBACK = "http://localhost:3000/oauth2/callback";
+    @Value("${app.frontend-url:http://localhost:3000}")
+    private String frontendUrl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -40,6 +42,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String token = jwtTokenProvider.createToken(userId, role);
         String code  = tempCodeStore.save(token, userId, name != null ? name : "", role);
 
-        getRedirectStrategy().sendRedirect(request, response, FRONTEND_CALLBACK + "?code=" + code);
+        getRedirectStrategy().sendRedirect(request, response, frontendUrl + "/oauth2/callback?code=" + code);
     }
 }
