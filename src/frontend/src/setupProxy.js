@@ -1,11 +1,13 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8080';
+
 module.exports = function(app) {
     // 일반 API 요청 프록시
     app.use(
         '/api',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: BACKEND_URL,
             changeOrigin: true,
         })
     );
@@ -13,7 +15,7 @@ module.exports = function(app) {
     app.use(
         '/oauth2/authorization',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: BACKEND_URL,
             changeOrigin: true,
         })
     );
@@ -21,7 +23,7 @@ module.exports = function(app) {
     app.use(
         '/login/oauth2',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: BACKEND_URL,
             changeOrigin: true,
         })
     );
@@ -29,7 +31,7 @@ module.exports = function(app) {
     app.use(
         '/uploads',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: BACKEND_URL,
             changeOrigin: true,
         })
     );
