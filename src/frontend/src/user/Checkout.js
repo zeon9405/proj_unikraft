@@ -202,9 +202,13 @@ const Checkout = ({ user }) => {
                             className="cart-checkout-btn"
                             onClick={handleCheckout}
                             disabled={loading}
-                            style={{ opacity: loading ? 0.6 : 1 }}
                         >
-                            {loading ? '처리 중...' : '결제하기'}
+                            {loading ? (
+                                <span className="btn-loading">
+                                    <span className="btn-spinner"></span>
+                                    결제 처리 중...
+                                </span>
+                            ) : '결제하기'}
                         </button>
                         <p style={{ fontSize: 11, color: 'var(--mid)', textAlign: 'center', marginTop: 12, opacity: 0.7 }}>
                             토스페이먼츠 안전결제

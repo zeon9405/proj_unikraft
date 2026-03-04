@@ -32,6 +32,7 @@ const Join = () => {
     const [agree3, setAgree3] = useState(false);
     const [categories, setCategories] = useState([]);
     const [errorMsg, setErrorMsg] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const passCount = pw ? PW_RULES.filter(r => r.test(pw)).length : 0;
@@ -100,6 +101,7 @@ const Join = () => {
             return;
         }
 
+        setLoading(true);
         const role = memberType === 'artisan' ? 1 : 0;
 
         fetch('/api/user/join', {
@@ -122,7 +124,10 @@ const Join = () => {
                 if (!res.ok) throw new Error('회원가입 실패');
                 navigate('/login');
             })
-            .catch(() => setErrorMsg('회원가입 중 오류가 발생했습니다.'));
+            .catch(() => {
+                setLoading(false);
+                setErrorMsg('회원가입 중 오류가 발생했습니다.');
+            });
     };
 
     return (
@@ -362,8 +367,13 @@ const Join = () => {
 
                     {errorMsg && <p style={{ color: 'red', fontSize: 13, marginBottom: 8 }}>{errorMsg}</p>}
 
-                    <button type="submit" className="login-btn">
-                        {memberType === 'artisan' ? '장인으로 가입하기' : '회원가입'}
+                    <button type="submit" className="login-btn" disabled={loading}>
+                        {loading ? (
+                            <span className="btn-loading">
+                                <span className="btn-spinner"></span>
+                                처리 중...
+                            </span>
+                        ) : (memberType === 'artisan' ? '장인으로 가입하기' : '회원가입')}
                     </button>
                 </form>
 

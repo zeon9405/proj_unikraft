@@ -5,11 +5,13 @@ const Login = ({ setUser }) => {
     const [loginId, setLoginId] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = e => {
         e.preventDefault();
         setErrorMsg('');
+        setLoading(true);
 
         fetch('/api/user/login', {
             method: 'POST',
@@ -18,6 +20,7 @@ const Login = ({ setUser }) => {
         })
             .then(res => {
                 if (res.status === 401) {
+                    setLoading(false);
                     setErrorMsg('아이디 또는 비밀번호가 올바르지 않습니다.');
                     return null;
                 }
@@ -37,6 +40,7 @@ const Login = ({ setUser }) => {
             })
             .catch(err => {
                 console.error(err);
+                setLoading(false);
                 setErrorMsg('로그인 중 오류가 발생했습니다.');
             });
     };
@@ -75,7 +79,14 @@ const Login = ({ setUser }) => {
                         <Link to="/find-account" className="login-forgot">비밀번호를 잊으셨나요?</Link>
                     </div>
                     {errorMsg && <p style={{ color: 'red', fontSize: 13, marginBottom: 8 }}>{errorMsg}</p>}
-                    <button type="submit" className="login-btn">로그인</button>
+                    <button type="submit" className="login-btn" disabled={loading}>
+                        {loading ? (
+                            <span className="btn-loading">
+                                <span className="btn-spinner"></span>
+                                로그인 중...
+                            </span>
+                        ) : '로그인'}
+                    </button>
                 </form>
 
                 <div className="login-divider"><span>또는</span></div>
