@@ -2194,6 +2194,81 @@ footer {
     flex-shrink: 0;
 }
 
+/* ── PASSWORD STRENGTH ── */
+.pw-strength-wrap {
+    margin-top: 8px;
+}
+
+.pw-strength-bar {
+    display: flex;
+    gap: 4px;
+    height: 4px;
+    margin-bottom: 6px;
+}
+
+.pw-strength-segment {
+    flex: 1;
+    border-radius: 2px;
+    background: rgba(184, 142, 141, 0.18);
+    transition: background 0.3s;
+}
+
+.pw-strength-segment.weak   { background: #E05252; }
+.pw-strength-segment.medium { background: #D4874A; }
+.pw-strength-segment.strong { background: #4A9C6D; }
+
+.pw-strength-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+}
+
+.pw-strength-label.weak   { color: #E05252; }
+.pw-strength-label.medium { color: #D4874A; }
+.pw-strength-label.strong { color: #4A9C6D; }
+
+.pw-rules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.pw-rule-item {
+    font-size: 11px;
+    color: rgba(92, 79, 74, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s;
+}
+
+.pw-rule-item::before {
+    content: '○';
+    font-size: 9px;
+}
+
+.pw-rule-item.pass {
+    color: #4A9C6D;
+}
+
+.pw-rule-item.pass::before {
+    content: '✓';
+    font-weight: 700;
+}
+
+.pw-match-msg {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.pw-match-msg.match    { color: #4A9C6D; }
+.pw-match-msg.mismatch { color: #E05252; }
+
 /* ── PRODUCT LIST PAGE ── */
 .product-list-toolbar {
     padding: 16px 60px;

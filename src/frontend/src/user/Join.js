@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { uploadUserImage } from '../api';
 
+const PW_RULES = [
+    { key: 'length',  label: '8자 이상',     test: v => v.length >= 8 },
+    { key: 'letter',  label: '영문 포함',     test: v => /[a-zA-Z]/.test(v) },
+    { key: 'number',  label: '숫자 포함',     test: v => /[0-9]/.test(v) },
+    { key: 'special', label: '특수문자 포함', test: v => /[!@#$%^&*\-_=+,.?]/.test(v) },
+];
+
+const STRENGTH = ['', 'weak', 'weak', 'medium', 'strong'];
+const STRENGTH_LABEL = { weak: '약함', medium: '보통', strong: '강함' };
+
 const Join = () => {
     const [memberType, setMemberType] = useState('buyer');
     const [name, setName] = useState('');
@@ -23,6 +33,10 @@ const Join = () => {
     const [categories, setCategories] = useState([]);
     const [errorMsg, setErrorMsg] = useState('');
     const navigate = useNavigate();
+
+    const passCount = pw ? PW_RULES.filter(r => r.test(pw)).length : 0;
+    const strengthLevel = STRENGTH[passCount];
+    const strengthLabel = STRENGTH_LABEL[strengthLevel] || '';
 
     useEffect(() => {
         fetch('/api/category/all')
@@ -69,6 +83,10 @@ const Join = () => {
         e.preventDefault();
         setErrorMsg('');
 
+        if (passCount < 4) {
+            setErrorMsg('비밀번호 규칙을 모두 충족해주세요.');
+            return;
+        }
         if (pw !== pwConfirm) {
             setErrorMsg('비밀번호가 일치하지 않습니다.');
             return;
@@ -196,6 +214,30 @@ const Join = () => {
                             value={pw}
                             onChange={e => setPw(e.target.value)}
                         />
+                        {pw && (
+                            <div className="pw-strength-wrap">
+                                <div className="pw-strength-bar">
+                                    {[1, 2, 3, 4].map(i => (
+                                        <div
+                                            key={i}
+                                            className={`pw-strength-segment${passCount >= i ? ` ${strengthLevel}` : ''}`}
+                                        />
+                                    ))}
+                                </div>
+                                {strengthLabel && (
+                                    <span className={`pw-strength-label ${strengthLevel}`}>
+                                        비밀번호 강도: {strengthLabel}
+                                    </span>
+                                )}
+                                <ul className="pw-rules">
+                                    {PW_RULES.map(rule => (
+                                        <li key={rule.key} className={`pw-rule-item${rule.test(pw) ? ' pass' : ''}`}>
+                                            {rule.label}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </div>
 
                     {/* 비밀번호 확인 */}
@@ -208,6 +250,11 @@ const Join = () => {
                             value={pwConfirm}
                             onChange={e => setPwConfirm(e.target.value)}
                         />
+                        {pwConfirm && (
+                            <p className={`pw-match-msg ${pw === pwConfirm ? 'match' : 'mismatch'}`}>
+                                {pw === pwConfirm ? '비밀번호가 일치합니다' : '비밀번호가 일치하지 않습니다'}
+                            </p>
+                        )}
                     </div>
 
                     {/* 연락처 */}
